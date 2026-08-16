@@ -53,7 +53,7 @@ public class Pedido {
 
     public void asignarRepartidor(String nombreRepartidor){
         asignarRepartidor();
-        System.out.println("Pedido asignado a "+ nombreRepartidor);
+        System.out.println("Pedido asignado a: "+ nombreRepartidor);
     }
 
     @Override

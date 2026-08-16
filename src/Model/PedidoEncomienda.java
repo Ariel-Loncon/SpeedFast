@@ -60,8 +60,10 @@ public class PedidoEncomienda extends Pedido{
     @Override
     public void asignarRepartidor(String nombreRepartidor) {
         super.asignarRepartidor();
+        System.out.println("→ Dirección: "+ getDireccionEntrega() + "\n" +
+                           "→ Tipo de encomienda: "+ tipoEncomienda);
         System.out.println("→ Validando peso y embalaje... OK");
-        System.out.println("→ Pedido asignado a " + nombreRepartidor);
+        System.out.println("→ Pedido asignado a: " + nombreRepartidor);
     }
 
     @Override

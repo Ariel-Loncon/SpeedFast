@@ -26,7 +26,8 @@ public class PedidoExpress extends Pedido{
     @Override
     public void asignarRepartidor(String nombreRepartidor) {
         super.asignarRepartidor();
-        System.out.println("→ Repartidor más cercano con disponibilidad inmediata encontrado.");
-        System.out.println("→ Pedido asignado a " + nombreRepartidor);
+        System.out.println("→ Dirección: "+ getDireccionEntrega() + "\n" +
+                           "→ Repartidor más cercano con disponibilidad inmediata encontrado.");
+        System.out.println("→ Pedido asignado a: " + nombreRepartidor);
     }
 }

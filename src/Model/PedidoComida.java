@@ -37,8 +37,10 @@ public class PedidoComida extends Pedido{
     @Override
     public void asignarRepartidor(String nombreRepartidor){
         super.asignarRepartidor();
+        System.out.println("→ Dirección: "+ getDireccionEntrega() + "\n" +
+                           "→ Nombre restaurante: " + nombreRestaurante);
         System.out.println("→ Verificando mochila térmica... OK");
-        System.out.println("→ Pedido asignado a " + nombreRepartidor);
+        System.out.println("→ Pedido asignado a: " + nombreRepartidor);
     }
 
     @Override
