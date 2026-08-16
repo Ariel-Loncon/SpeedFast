@@ -6,7 +6,7 @@ package Model;
 
 public class PedidoEncomienda extends Pedido{
 
-    private int peso;
+    private double peso;
     private String tipoEncomienda;
     private String embalaje;
 
@@ -20,18 +20,29 @@ public class PedidoEncomienda extends Pedido{
      * @param embalaje Tipo de embalaje que se seleccionara según tipo de encomienda
      */
 
-    public PedidoEncomienda(int id, String direccionEntrega, String tipoEntrega, int peso, String tipoEncomienda, String embalaje) {
+    public PedidoEncomienda(int id, String direccionEntrega, String tipoEntrega, double peso, String tipoEncomienda, String embalaje) {
         super(id, direccionEntrega, tipoEntrega);
+
+        if (peso <= 0) {
+            throw new IllegalArgumentException("El peso debe ser mayor a 0.0 kg.");
+        }
+        if (tipoEncomienda == null || tipoEncomienda.trim().isEmpty()) {
+            throw new IllegalArgumentException("El tipo de encomienda no puede estar vacía.");
+        }
+        if (embalaje == null || embalaje.trim().isEmpty()) {
+            throw new IllegalArgumentException("El embalaje no puede estar vacía.");
+        }
+
         this.peso = peso;
         this.tipoEncomienda = tipoEncomienda;
         this.embalaje = embalaje;
     }
 
-    public int getPeso() {
+    public double getPeso() {
         return peso;
     }
 
-    public void setPeso(int peso) {
+    public void setPeso(double peso) {
         this.peso = peso;
     }
 
@@ -66,12 +77,4 @@ public class PedidoEncomienda extends Pedido{
         System.out.println("→ Pedido asignado a: " + nombreRepartidor);
     }
 
-    @Override
-    public String toString() {
-        return "PedidoEncomienda{" +
-                "peso=" + peso +
-                ", tipoEncomienda='" + tipoEncomienda + '\'' +
-                ", embalaje='" + embalaje + '\'' +
-                '}';
-    }
 }

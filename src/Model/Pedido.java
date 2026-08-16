@@ -17,6 +17,15 @@ public class Pedido {
      */
 
     public Pedido(int id, String direccionEntrega, String tipoEntrega) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("El ID del pedido debe ser un número positivo.");
+        }
+        if (direccionEntrega == null || direccionEntrega.trim().isEmpty()) {
+           throw new IllegalArgumentException("La dirección de entrega no puede estar vacía.");
+       }
+        if (tipoEntrega == null || tipoEntrega.trim().isEmpty()) {
+            throw new IllegalArgumentException("El tipo de entrega no puede estar vacía.");
+        }
         this.id = id;
         this.direccionEntrega = direccionEntrega;
         this.tipoEntrega = tipoEntrega;
@@ -56,12 +65,4 @@ public class Pedido {
         System.out.println("Pedido asignado a: "+ nombreRepartidor);
     }
 
-    @Override
-    public String toString() {
-        return "Pedido{" +
-                "id=" + id +
-                ", direccionEntrega='" + direccionEntrega + '\'' +
-                ", tipoEntrega='" + tipoEntrega + '\'' +
-                '}';
-    }
 }

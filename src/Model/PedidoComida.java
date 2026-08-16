@@ -17,6 +17,10 @@ public class PedidoComida extends Pedido{
 
     public PedidoComida(int id, String direccionEntrega, String tipoEntrega, String nombreRestaurante) {
         super(id, direccionEntrega, tipoEntrega);
+
+        if (nombreRestaurante == null || nombreRestaurante.trim().isEmpty()) {
+            throw new IllegalArgumentException("El Nombre del restaurante no puede estar vacía.");
+        }
         this.nombreRestaurante = nombreRestaurante;
     }
 
@@ -41,12 +45,5 @@ public class PedidoComida extends Pedido{
                            "→ Nombre restaurante: " + nombreRestaurante);
         System.out.println("→ Verificando mochila térmica... OK");
         System.out.println("→ Pedido asignado a: " + nombreRepartidor);
-    }
-
-    @Override
-    public String toString() {
-        return "PedidoComida{" +
-                "nombreRestaurante='" + nombreRestaurante + '\'' +
-                '}';
     }
 }
