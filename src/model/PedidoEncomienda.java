@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 /**
  * SubClase de Pedido encargada de gestionar los pedidos de Encomienda
@@ -12,31 +12,32 @@ public class PedidoEncomienda extends Pedido{
 
     /**
      *
-     * @param id Número identificador del pedido
+     * @param idPedido Número identificador del pedido
      * @param direccionEntrega Dirección del cliente al cual se le entregara la encomienda
      * @param tipoEntrega se asigna un tipo de entrega a disposición en este caso "Encomienda"
+     * @param distanciaKm Distancia en km del punto de despacho al punto de entrega al cliente
      * @param peso Peso de la encomienda
      * @param tipoEncomienda Tipo de encomienda, sobres o paquetes
      * @param embalaje Tipo de embalaje que se seleccionara según tipo de encomienda
      */
 
-    public PedidoEncomienda(int id, String direccionEntrega, String tipoEntrega, double peso, String tipoEncomienda, String embalaje) {
-        super(id, direccionEntrega, tipoEntrega);
-
+    public PedidoEncomienda(int idPedido, String direccionEntrega, String tipoEntrega, double distanciaKm, double peso, String tipoEncomienda, String embalaje) {
+        super(idPedido, direccionEntrega, tipoEntrega, distanciaKm);
         if (peso <= 0) {
-            throw new IllegalArgumentException("El peso debe ser mayor a 0.0 kg.");
+            throw new IllegalArgumentException("El peso del pedido debe ser un número positivo.");
         }
         if (tipoEncomienda == null || tipoEncomienda.trim().isEmpty()) {
-            throw new IllegalArgumentException("El tipo de encomienda no puede estar vacía.");
+            throw new IllegalArgumentException("El tipo de encomienda no puede estar vacío.");
         }
         if (embalaje == null || embalaje.trim().isEmpty()) {
-            throw new IllegalArgumentException("El embalaje no puede estar vacía.");
+            throw new IllegalArgumentException("El embalaje de la encomienda no puede estar vacío.");
         }
-
         this.peso = peso;
         this.tipoEncomienda = tipoEncomienda;
         this.embalaje = embalaje;
     }
+
+    //////////////////////////////////////////////////////////////
 
     public double getPeso() {
         return peso;
@@ -62,19 +63,16 @@ public class PedidoEncomienda extends Pedido{
         this.embalaje = embalaje;
     }
 
-    @Override
-    public void asignarRepartidor() {
-        super.asignarRepartidor();
-        System.out.println("Validando peso y embalaje... OK");
-    }
+    //////////////////////////////////////////////////////////////
 
     @Override
-    public void asignarRepartidor(String nombreRepartidor) {
-        super.asignarRepartidor();
-        System.out.println("→ Dirección: "+ getDireccionEntrega() + "\n" +
-                           "→ Tipo de encomienda: "+ tipoEncomienda);
-        System.out.println("→ Validando peso y embalaje... OK");
-        System.out.println("→ Pedido asignado a: " + nombreRepartidor);
+    public void mostrarResumen(){
+        System.out.printf("Pedido Encomienda #%03d%n", getIdPedido());
+        super.mostrarResumen();
+    }
+
+    public int calcularTiempoEntrega(){
+        return (int)(20+(1.5*getDistanciaKm()));
     }
 
 }
