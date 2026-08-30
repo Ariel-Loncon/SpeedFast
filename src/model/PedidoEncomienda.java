@@ -10,19 +10,24 @@ public class PedidoEncomienda extends Pedido{
     private String tipoEncomienda;
     private String embalaje;
 
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      *
      * @param idPedido Número identificador del pedido
      * @param direccionEntrega Dirección del cliente al cual se le entregara la encomienda
      * @param tipoEntrega se asigna un tipo de entrega a disposición en este caso "Encomienda"
      * @param distanciaKm Distancia en km del punto de despacho al punto de entrega al cliente
+     * @param repartidor Nombre del repartidor asignado
+     * @param estado Estado del pedido Despachado o Cancelado
      * @param peso Peso de la encomienda
      * @param tipoEncomienda Tipo de encomienda, sobres o paquetes
      * @param embalaje Tipo de embalaje que se seleccionara según tipo de encomienda
      */
 
-    public PedidoEncomienda(int idPedido, String direccionEntrega, String tipoEntrega, double distanciaKm, double peso, String tipoEncomienda, String embalaje) {
-        super(idPedido, direccionEntrega, tipoEntrega, distanciaKm);
+    public PedidoEncomienda(int idPedido, String direccionEntrega, String tipoEntrega, double distanciaKm, String repartidor, String estado, double peso, String tipoEncomienda, String embalaje) {
+        super(idPedido, direccionEntrega, tipoEntrega, distanciaKm, repartidor, estado);
         if (peso <= 0) {
             throw new IllegalArgumentException("El peso del pedido debe ser un número positivo.");
         }
@@ -67,12 +72,18 @@ public class PedidoEncomienda extends Pedido{
 
     @Override
     public void mostrarResumen(){
-        System.out.printf("Pedido Encomienda #%03d%n", getIdPedido());
+        System.out.printf("[Pedido Encomienda]"+ "\n" +
+                           "Pedido #%03d%n", getIdPedido());
         super.mostrarResumen();
     }
 
     public int calcularTiempoEntrega(){
         return (int)(20+(1.5*getDistanciaKm()));
+    }
+
+    @Override
+    public void asignarRepartidor() {
+        setRepartidor("Repartidor Encomiendas ");
     }
 
 }
