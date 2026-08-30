@@ -7,20 +7,20 @@ Proyecto desarrollado para la asignatura **Desarrollo Orientado a Objetos II** (
 ## 📋 Características y Principios Aplicados
 
 ### 1. Jerarquía de Clases y Abstracción
-* **`Pedido`**: Clase abstracta base que encapsula los atributos comunes (`idPedido`, `direccionEntrega`, `tipoEntrega`, `distanciaKm`, `repartidor`, `estado`).
+* **`pedido`**: Clase abstracta base que encapsula los atributos comunes (`idPedido`, `direccionEntrega`, `tipoEntrega`, `distanciaKm`, `repartidor`, `estado`).
 * **`calcularTiempoEntrega()`**: Método abstracto que implementa la lógica específica de estimación de tiempo según el tipo de pedido:
-  * `PedidoComida`: $15 + (2 \times \text{distancia})$.
-  * `PedidoEncomienda`: $20 + (1.5 \times \text{distancia})$.
-  * `PedidoExpress`: 10 minutos base (+5 min por cada 5 km extra).
+  * `pedidoComida`: $15 + (2 \times \text{distancia})$.
+  * `pedidoEncomienda`: $20 + (1.5 \times \text{distancia})$.
+  * `pedidoExpress`: 10 minutos base (+5 min por cada 5 km extra).
 
 ### 2. Polimorfismo
 * **Sobrescritura (`@Override`)**: Método `asignarRepartidor()` adaptado en cada subclase para la asignación automática por tipo de servicio.
 * **Sobrecarga**: Método `asignarRepartidor(String nombre)` disponible en la clase base para permitir la asignación manual de repartidores.
 
 ### 3. Interfaces y Desacoplamiento
-* **`Despachable`**: Define la capacidad de despachar el pedido actualizando su estado.
-* **`Cancelable`**: Define el comportamiento para anular un envío.
-* **`Rastreable`**: Implementada en `ControladorDeEnvios` para desacoplar el almacenamiento y visualización del historial de entregas.
+* **`despachable`**: Define la capacidad de despachar el pedido actualizando su estado.
+* **`cancelable`**: Define el comportamiento para anular un envío.
+* **`rastreable`**: Implementada en `controladorDeEnvios` para desacoplar el almacenamiento y visualización del historial de entregas.
 
 ---
 
@@ -29,15 +29,15 @@ Proyecto desarrollado para la asignatura **Desarrollo Orientado a Objetos II** (
 ```text
 src/
 ├── data/
-│   └── ControladorDeEnvios.java
+│   └── controladorDeEnvios.java
 ├── main/
-│   └── Main.java
+│   └── main.java
 └── model/
     ├── interfaces/
-    │   ├── Cancelable.java
-    │   ├── Despachable.java
-    │   └── Rastreable.java
-    ├── Pedido.java
-    ├── PedidoComida.java
-    ├── PedidoEncomienda.java
-    └── PedidoExpress.java
+    │   ├── cancelable.java
+    │   ├── despachable.java
+    │   └── rastreable.java
+    ├── pedido.java
+    ├── pedidoComida.java
+    ├── pedidoEncomienda.java
+    └── pedidoExpress.java
