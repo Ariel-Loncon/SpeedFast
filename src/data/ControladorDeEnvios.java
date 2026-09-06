@@ -5,10 +5,10 @@ import model.interfaces.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class controladorDeEnvios implements rastreable {
+public class ControladorDeEnvios implements Rastreable {
     private List<Pedido> historial;
 
-    public controladorDeEnvios() {
+    public ControladorDeEnvios() {
         this.historial = new ArrayList<>();
     }
 

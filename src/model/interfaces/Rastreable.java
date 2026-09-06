@@ -1,5 +1,5 @@
 package model.interfaces;
 
-public interface rastreable {
+public interface Rastreable {
     void verHistorial();
 }

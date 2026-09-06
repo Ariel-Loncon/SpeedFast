@@ -2,58 +2,64 @@ package main;
 import model.*;
 import model.interfaces.*;
 import data.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
 
-    public static void main(String[] args) {
-        controladorDeEnvios controlador = new controladorDeEnvios();
-        Pedido[] pedidos = new Pedido[3];
+        public static void main(String[] args) {
+            ControladorDeEnvios controlador = new ControladorDeEnvios();
 
-        try {
-            pedidos[0] = new PedidoComida(101, "Av. Providencia 1234", "Comida", 4.0, " ", "Despachado", "Dragón de Oro");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error al crear pedido de Comida: " + e.getMessage());
-        }
-        try {
-            pedidos[1] = new PedidoEncomienda(102, "Av. Santa Rosa 567", "Encomienda", 7.0, " ", "Despachado", 5.6, "Paquete grande", "Caja");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error al crear pedido de Encomienda: " + e.getMessage());
-        }
-        try {
-            pedidos[2] = new PedidoExpress(103, "Condell 789", "Express", 15.0, " ", "Cancelado");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error al crear pedido Express: " + e.getMessage());
-        }
+            Pedido p1 = new PedidoComida(101, "Av. Providencia 1234", "Comida", 4.0, "", "Pendiente", "Dragón de Oro");
+            Pedido p2 = new PedidoExpress(102, "Condell 789", "Express", 3.0, "", "Pendiente");
+            Pedido p3 = new PedidoEncomienda(103, "Av. Santa Rosa 567", "Encomienda", 7.0, "", "Pendiente", 5.6, "Paquete", "Caja");
+            Pedido p4 = new PedidoComida(104, "Ahumada 432", "Comida", 2.5, "", "Pendiente", "Sushi House");
+            Pedido p5 = new PedidoExpress(105, "Alameda 900", "Express", 8.0, "", "Pendiente");
+            Pedido p6 = new PedidoEncomienda(106, "Vitacura 1100", "Encomienda", 12.0, "", "Pendiente", 2.1, "Sobre", "Sobre Manila");
 
+            Repartidor r1 = new Repartidor("Camila");
+            Repartidor r2 = new Repartidor("Luis");
+            Repartidor r3 = new Repartidor("Carlos");
 
-        pedidos[0].asignarRepartidor("Luis Díaz");
-        pedidos[1].asignarRepartidor("Daniela Tapia");
-        pedidos[2].asignarRepartidor();
+            r1.agregarPedido(p1);
+            r1.agregarPedido(p4);
 
+            r2.agregarPedido(p2);
+            r2.agregarPedido(p5);
 
-        for (Pedido p : pedidos) {
-            if (p != null) {
-                try {
+            r3.agregarPedido(p3);
+            r3.agregarPedido(p6);
 
-                    if ("Cancelado".equalsIgnoreCase(p.getEstado())) {
-                        System.out.println("Cancelando Pedido Express #" + p.getIdPedido() + "...");
-                        p.cancelar();
-                    } else if ("Despachado".equalsIgnoreCase(p.getEstado())) {
-                        p.mostrarResumen();
-                        p.despachar();
-                    } else {
-                        System.out.println("El pedido #" + p.getIdPedido() + " se encuentra en estado: " + p.getEstado());
-                    }
-                    controlador.agregarAlHistorial(p);
-                    System.out.println();
+            controlador.agregarAlHistorial(p1);
+            controlador.agregarAlHistorial(p2);
+            controlador.agregarAlHistorial(p3);
+            controlador.agregarAlHistorial(p4);
+            controlador.agregarAlHistorial(p5);
+            controlador.agregarAlHistorial(p6);
 
+            System.out.println("=== INICIANDO SIMULACIÓN DE ENTREGAS CONCURRENTES ===\n");
 
+            ExecutorService executor = Executors.newFixedThreadPool(3);
 
-                } catch (Exception e) {
-                    System.out.println("Error al procesar el pedido #" + p.getIdPedido() + ": " + e.getMessage());
+            executor.execute(r1);
+            executor.execute(r2);
+            executor.execute(r3);
+
+            executor.shutdown();
+
+            try {
+                if (!executor.awaitTermination(60, TimeUnit.SECONDS)) {
+                    executor.shutdownNow();
                 }
+            } catch (InterruptedException e) {
+                System.err.println("La simulación fue interrumpida: " + e.getMessage());
+                executor.shutdownNow();
+                Thread.currentThread().interrupt();
             }
+
+            System.out.println("\n=== TODAS LAS ENTREGAS HAN FINALIZADO ===");
+            System.out.println("\n=== HISTORIAL DE ENVÍOS ===");
+            controlador.verHistorial();
         }
-        controlador.verHistorial();
-    }
 }

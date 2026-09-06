@@ -1,5 +1,5 @@
 package model.interfaces;
 
-public interface cancelable {
+public interface Cancelable {
     void cancelar();
 }

@@ -5,7 +5,7 @@ import model.interfaces.*;
  * Clase principal, que lega atributos y métodos a las subclases
  */
 
-public abstract class Pedido implements despachable, cancelable{
+public abstract class Pedido implements Despachable, Cancelable, Comparable<Pedido> {
     private int idPedido;
     private String direccionEntrega;
     private String tipoEntrega;
@@ -120,6 +120,11 @@ public abstract class Pedido implements despachable, cancelable{
     public void cancelar() {
         this.estado = "Cancelado";
         System.out.println("→ Pedido cancelado exitosamente.");
+    }
+
+    @Override
+    public int compareTo(Pedido o){
+        return Integer.compare(this.idPedido, o.getIdPedido());
     }
 
 }

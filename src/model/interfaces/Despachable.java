@@ -1,5 +1,5 @@
 package model.interfaces;
 
-public interface despachable {
+public interface Despachable {
     void despachar();
 }
